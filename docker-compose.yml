@@ -1,0 +1,31 @@
+version: "3.2"
+
+services:
+ nginx:
+   image: nginx:alpine
+   volumes:
+     - ./var/www:/var/www
+     - ./nginx/conf.d/:/etc/nginx/conf.d/
+   ports:
+     - 80:80
+     - 443:443
+   depends_on:
+     - php
+
+ php:
+   build:
+     context: .
+   volumes:
+     - ./var/www:/var/www
+   ports:
+     - 9000:9000
+
+ db:
+   image: mysql:latest
+   ports:
+     - 3308:3306
+   environment:
+    MYSQL_ROOT_PASSWORD: 1233
+    MYSQL_DATABASE: lab02
+    MYSQL_USER: root
+    MYSQL_PASSWORD: 1233
